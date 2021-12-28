@@ -22,7 +22,7 @@ static void	ft_define(char a, va_list arg, int *res)
 		write(1, "%", 1);
 		*res = *res + 1;
 	}
-	else if (a == 'i')
+	else if (a == 'i' || a == 'd')
 		ft_putnbr_fd(va_arg(arg, int), 1, res);
 }
 
