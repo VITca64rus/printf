@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 14:11:03 by sazelda           #+#    #+#             */
-/*   Updated: 2021/12/29 15:29:46 by sazelda          ###   ########.fr       */
+/*   Updated: 2021/12/29 15:34:01 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ static void	ft_define(char a, va_list arg, int *res)
 	else if (a == 's')
 		ft_putstr(va_arg(arg, char *), res);
 	else if (a == 'p')
-	{
 		ft_if_p(arg, res);
-	}
 	else if (a == '%')
 	{
 		write(1, "%", 1);
