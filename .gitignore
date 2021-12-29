@@ -1,4 +1,6 @@
 /printfTester
+/printf-unit-tests
+/ft_printf_tester
 /.vscode
 a.out
 ft_help.o

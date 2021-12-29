@@ -1,5 +1,22 @@
 #include "unistd.h"
 
+void	ft_putnbr_fd_no_znak(unsigned int n, int fd, int *res)
+{
+	char	c;
+
+	if (n >= 10)
+	{
+		ft_putnbr_fd_no_znak(n / 10, fd, res);
+		ft_putnbr_fd_no_znak(n % 10, fd, res);
+	}
+	else
+	{
+		c = n + '0';
+		write(fd, &c, 1);
+		*res = *res + 1;
+	}
+}
+
 void	ft_putnbr_fd(int n, int fd, int *res)
 {
 	char	c;

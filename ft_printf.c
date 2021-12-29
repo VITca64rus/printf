@@ -1,25 +1,59 @@
 #include <unistd.h>
+#include <stdlib.h>
 #include "ft_printf.h"
 
-void	ft_convert_print_to_hex(unsigned long ch, int *res)
+char	*ft_create_string_hex(int flag)
 {
-	char			ss[16] = "0123456789abcdef";
+	char	*s;
+	char	a;
+	int		i;
+	s = malloc(16);
+	a = '0';
+	i = 0;
+	while (a <= '9')
+	{
+		s[i] = a;
+		a++;
+		i++;
+	}
+	if (flag == 0)
+		a = 'a';
+	else
+		a = 'A';
+	while (((flag != 0) && (a <= 'F')) || ((flag == 0) && (a <= 'f')))
+	{
+		s[i] = a;
+		i++;
+		a++;
+	}
+	return (s);
+}
+
+void	ft_convert_print_to_hex(unsigned long long ch, int *res, int flag)
+{
+	char			*ss;
 	char			addr[32];
 	int i;
 	addr[31] = '\0';
 	i = 30;
+	ss = ft_create_string_hex(flag);
+	if (ch == 0)
+	{
+		write(1, "0", 1);
+		*res = *res + 1;
+	}
 	while (ch > 0)
 	{
 		addr[i] = ss[ch % 16];
 		i--;
 		ch = ch / 16;
 	}
-	addr[i] = 'x';
-	i--;
-	addr[i] = '0';
-	write(1, &addr[i], 31-i);
+	i++;
+	write(1, &addr[i], 31 - i);
 	*res = *res + 31 - i;
+	free(ss);
 }
+
 
 static void	ft_define(char a, va_list arg, int *res)
 {
@@ -38,7 +72,11 @@ static void	ft_define(char a, va_list arg, int *res)
 	{
 		uns_l = va_arg(arg, unsigned long);
 		if (uns_l != 0)
-			ft_convert_print_to_hex(uns_l, res);
+		{
+			write(1, "0x", 2);
+			*res = *res + 2;
+			ft_convert_print_to_hex(uns_l, res, 0);
+		}
 		else
 		{
 			write(1, "(nil)", 5);
@@ -52,6 +90,12 @@ static void	ft_define(char a, va_list arg, int *res)
 	}
 	else if (a == 'i' || a == 'd')
 		ft_putnbr_fd(va_arg(arg, int), 1, res);
+	else if (a == 'u')
+		ft_putnbr_fd_no_znak(va_arg(arg, unsigned int), 1, res);
+	else if (a == 'x')
+		ft_convert_print_to_hex(va_arg(arg, unsigned int), res, 0);
+	else if (a == 'X')
+		ft_convert_print_to_hex(va_arg(arg, unsigned int), res, 1);
 }
 
 int	ft_printf (const char *format, ...)
@@ -82,6 +126,6 @@ int	ft_printf (const char *format, ...)
 // int	main(void)
 // {
 // 	//int i = 1;
-// 	printf(" %p %p \n", 0, 0);
-// 	ft_printf(" %p %p ", 0, 0);
+// 	printf("%d\n", printf(" %x ", -1));
+// 	printf("%d", ft_printf(" %x ", -1));
 // }
