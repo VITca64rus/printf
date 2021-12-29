@@ -6,72 +6,34 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 14:11:03 by sazelda           #+#    #+#             */
-/*   Updated: 2021/12/29 14:19:14 by sazelda          ###   ########.fr       */
+/*   Updated: 2021/12/29 15:29:46 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
 #include "ft_printf.h"
 
-char	*ft_create_string_hex(int flag)
+static void	ft_if_p(va_list arg, int *res)
 {
-	char	*s;
-	char	a;
-	int		i;
+	unsigned long	uns_l;
 
-	s = malloc(16);
-	a = '0';
-	i = 0;
-	while (a <= '9')
+	uns_l = va_arg(arg, unsigned long);
+	if (uns_l != 0)
 	{
-		s[i] = a;
-		a++;
-		i++;
+		write(1, "0x", 2);
+		*res = *res + 2;
+		ft_convert_print_to_hex(uns_l, res, 0);
 	}
-	if (flag == 0)
-		a = 'a';
 	else
-		a = 'A';
-	while (((flag != 0) && (a <= 'F')) || ((flag == 0) && (a <= 'f')))
 	{
-		s[i] = a;
-		i++;
-		a++;
+		write(1, "(nil)", 5);
+		*res = *res + 5;
 	}
-	return (s);
-}
-
-void	ft_convert_print_to_hex(unsigned long long ch, int *res, int flag)
-{
-	char	*ss;
-	char	addr[32];
-	int		i;
-
-	addr[31] = '\0';
-	i = 30;
-	ss = ft_create_string_hex(flag);
-	if (ch == 0)
-	{
-		write(1, "0", 1);
-		*res = *res + 1;
-	}
-	while (ch > 0)
-	{
-		addr[i] = ss[ch % 16];
-		i--;
-		ch = ch / 16;
-	}
-	i++;
-	write(1, &addr[i], 31 - i);
-	*res = *res + 31 - i;
-	free(ss);
 }
 
 static void	ft_define(char a, va_list arg, int *res)
 {
 	unsigned int	i;
-	unsigned long	uns_l;
 
 	if (a == 'c')
 	{
@@ -83,18 +45,7 @@ static void	ft_define(char a, va_list arg, int *res)
 		ft_putstr(va_arg(arg, char *), res);
 	else if (a == 'p')
 	{
-		uns_l = va_arg(arg, unsigned long);
-		if (uns_l != 0)
-		{
-			write(1, "0x", 2);
-			*res = *res + 2;
-			ft_convert_print_to_hex(uns_l, res, 0);
-		}
-		else
-		{
-			write(1, "(nil)", 5);
-			*res = *res + 5;
-		}
+		ft_if_p(arg, res);
 	}
 	else if (a == '%')
 	{
@@ -135,10 +86,3 @@ int	ft_printf(const char *format, ...)
 	va_end(arg);
 	return (res);
 }
-
-// int	main(void)
-// {
-// 	//int i = 1;
-// 	printf("%d\n", printf(" %x ", -1));
-// 	printf("%d", ft_printf(" %x ", -1));
-// }

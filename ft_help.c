@@ -6,11 +6,12 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 14:10:51 by sazelda           #+#    #+#             */
-/*   Updated: 2021/12/29 14:20:27 by sazelda          ###   ########.fr       */
+/*   Updated: 2021/12/29 15:29:52 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unistd.h"
+#include <stdlib.h>
 
 void	ft_putnbr_fd_no_znak(unsigned int n, int fd, int *res)
 {
@@ -74,4 +75,58 @@ void	ft_putstr(char *s, int *res)
 			*res = *res + 1;
 		}
 	}
+}
+
+char	*ft_create_string_hex(int flag)
+{
+	char	*s;
+	char	a;
+	int		i;
+
+	s = malloc(16);
+	a = '0';
+	i = 0;
+	while (a <= '9')
+	{
+		s[i] = a;
+		a++;
+		i++;
+	}
+	if (flag == 0)
+		a = 'a';
+	else
+		a = 'A';
+	while (((flag != 0) && (a <= 'F')) || ((flag == 0) && (a <= 'f')))
+	{
+		s[i] = a;
+		i++;
+		a++;
+	}
+	return (s);
+}
+
+void	ft_convert_print_to_hex(unsigned long long ch, int *res, int flag)
+{
+	char	*ss;
+	char	addr[32];
+	int		i;
+
+	addr[31] = '\0';
+	i = 30;
+	ss = ft_create_string_hex(flag);
+	if (ch == 0)
+	{
+		write(1, "0", 1);
+		*res = *res + 1;
+	}
+	while (ch > 0)
+	{
+		addr[i] = ss[ch % 16];
+		i--;
+		ch = ch / 16;
+	}
+	i++;
+	write(1, &addr[i], 31 - i);
+	*res = *res + 31 - i;
+	free(ss);
 }
