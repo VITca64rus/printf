@@ -7,9 +7,7 @@ OBJ_FILES = $(SRC_FILES:.c=.o)
 
 all: obj $(NAME)
 
-
 obj: $(SRC_FILES)
-
 
 %.o: %.c ft_printf.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -20,15 +18,10 @@ $(NAME): $(OBJ_FILES)
 
 clean:
 	rm -f $(OBJ_FILES)
-	rm -f $(OBJ_FILES_BONUS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
-test:
-	gcc -c main.c
-	gcc main.o -L. -lft
-
-.PHONY: all clean fclean re libft.a
+.PHONY: all clean fclean re

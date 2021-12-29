@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 14:10:51 by sazelda           #+#    #+#             */
-/*   Updated: 2021/12/29 15:29:52 by sazelda          ###   ########.fr       */
+/*   Updated: 2021/12/29 21:09:05 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,11 @@ void	ft_putstr(char *s, int *res)
 	}
 }
 
-char	*ft_create_string_hex(int flag)
+void	*ft_create_string_hex(int flag, char *s)
 {
-	char	*s;
 	char	a;
 	int		i;
 
-	s = malloc(16);
 	a = '0';
 	i = 0;
 	while (a <= '9')
@@ -102,7 +100,6 @@ char	*ft_create_string_hex(int flag)
 		i++;
 		a++;
 	}
-	return (s);
 }
 
 void	ft_convert_print_to_hex(unsigned long long ch, int *res, int flag)
@@ -113,7 +110,8 @@ void	ft_convert_print_to_hex(unsigned long long ch, int *res, int flag)
 
 	addr[31] = '\0';
 	i = 30;
-	ss = ft_create_string_hex(flag);
+	ss = (char *)malloc(16);
+	ss = ft_create_string_hex(flag, ss);
 	if (ch == 0)
 	{
 		write(1, "0", 1);
