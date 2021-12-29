@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/29 14:11:03 by sazelda           #+#    #+#             */
+/*   Updated: 2021/12/29 14:19:14 by sazelda          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stdlib.h>
 #include "ft_printf.h"
@@ -7,6 +19,7 @@ char	*ft_create_string_hex(int flag)
 	char	*s;
 	char	a;
 	int		i;
+
 	s = malloc(16);
 	a = '0';
 	i = 0;
@@ -31,9 +44,10 @@ char	*ft_create_string_hex(int flag)
 
 void	ft_convert_print_to_hex(unsigned long long ch, int *res, int flag)
 {
-	char			*ss;
-	char			addr[32];
-	int i;
+	char	*ss;
+	char	addr[32];
+	int		i;
+
 	addr[31] = '\0';
 	i = 30;
 	ss = ft_create_string_hex(flag);
@@ -54,7 +68,6 @@ void	ft_convert_print_to_hex(unsigned long long ch, int *res, int flag)
 	free(ss);
 }
 
-
 static void	ft_define(char a, va_list arg, int *res)
 {
 	unsigned int	i;
@@ -68,7 +81,7 @@ static void	ft_define(char a, va_list arg, int *res)
 	}
 	else if (a == 's')
 		ft_putstr(va_arg(arg, char *), res);
-	else if(a == 'p')
+	else if (a == 'p')
 	{
 		uns_l = va_arg(arg, unsigned long);
 		if (uns_l != 0)
@@ -98,12 +111,12 @@ static void	ft_define(char a, va_list arg, int *res)
 		ft_convert_print_to_hex(va_arg(arg, unsigned int), res, 1);
 }
 
-int	ft_printf (const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-	va_list arg;
+	va_list	arg;
 	int		res;
-	res = 0;
 
+	res = 0;
 	va_start(arg, format);
 	while (*format != '\0')
 	{
