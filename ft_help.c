@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 14:10:51 by sazelda           #+#    #+#             */
-/*   Updated: 2021/12/29 22:02:09 by sazelda          ###   ########.fr       */
+/*   Updated: 2021/12/29 22:07:51 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_putstr(char *s, int *res)
 	}
 }
 
-void	ft_create_string_hex(int flag, char *s)
+static void	ft_create_string_hex(int flag, char *s)
 {
 	char	a;
 	int		i;
