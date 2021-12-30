@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 14:11:03 by sazelda           #+#    #+#             */
-/*   Updated: 2021/12/29 20:56:45 by sazelda          ###   ########.fr       */
+/*   Updated: 2021/12/30 14:02:19 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	ft_if_p(va_list arg, int *res)
 	}
 	else
 	{
-		write(1, "(null)", 6);
-		*res = *res + 6;
+		write(1, "0x0", 3);
+		*res = *res + 3;
 	}
 }
 
